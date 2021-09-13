@@ -14,12 +14,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     //class constants (do not depends on class instances)
     companion object{
         private const val KEY_LAYOUT_TYPE = "layoutType"
-        //todo: add a constant to define the grid spanCount (to do it after figuring out what is it for)
+        private const val SPAN_COUNT = 2 //defines the quantity of view per line (in the grid visualization)
     }
-
+    private var repository = Repository()
+    private var mCurrentLayoutManager = LayoutType.LINEAR_LAYOUT
     private lateinit var binding: ActivityMainBinding
     private lateinit var mRecycler: RecyclerView
-    private lateinit var mCurrentLayoutManager: LayoutType
+    private lateinit var mAdapter: NoteAdapter
+
 
     private enum class LayoutType{
         LINEAR_LAYOUT,
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         //setup view binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,8 +39,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setupRecyclerView()
         setupListeners() //the listeners are not saved into the bundle, must be set to every Activity's creation
 
-        //check if the Bundle is null, if true then LinearLayout is the default, else get the active list layout before the system's change
-        mCurrentLayoutManager = (savedInstanceState?.getSerializable(KEY_LAYOUT_TYPE)?: LayoutType.LINEAR_LAYOUT) as LayoutType
+        with(savedInstanceState){
+            if(this!=null){
+                mCurrentLayoutManager = getSerializable(KEY_LAYOUT_TYPE) as LayoutType
+            }
+        }
 
         setListLayout(mCurrentLayoutManager)
     }
@@ -66,13 +72,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun setupRecyclerView() {
         mRecycler = binding.rcylerViewNoteList
         //TODO: needed to set the adapter
+        mAdapter = NoteAdapter(repository.getNoteList())
+        mAdapter.setOnItemClickListener{ _,position ->
+            showShortToast("List item ${position+1} was clicked!")
+        }
+        mRecycler.adapter = mAdapter
     }
 
     private fun setListLayout(layoutType: LayoutType) {
         mCurrentLayoutManager = layoutType
         mRecycler.layoutManager = when(mCurrentLayoutManager){
             LayoutType.LINEAR_LAYOUT -> LinearLayoutManager(this)
-            LayoutType.GRID_LAYOUT -> GridLayoutManager(this,2)
+            LayoutType.GRID_LAYOUT -> GridLayoutManager(this,SPAN_COUNT)
         }
         Log.d("MainActivity","RecyclerView LayoutManager is: ${mRecycler.layoutManager}")
     }
