@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    tools:context=".NoteActivity">
+
+    <ScrollView
+        android:id="@+id/scrllView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editTxt_noteTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:background="@android:color/transparent"
+                android:hint="Title"
+                android:imeOptions="actionNext"
+                android:inputType="text|textAutoComplete|textAutoCorrect|textCapSentences"
+                android:maxLength="500"
+                android:textColorHint="#CCC3C3"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="28sp"
+                tools:text="" />
+
+            <EditText
+                android:id="@+id/editTxt_noteContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:hint="note"
+                android:inputType="textMultiLine|textAutoCorrect|textAutoComplete|textCapSentences"
+                android:maxLength="10000"
+                android:maxLines="1000"
+                android:textColorHint="#CCC3C3"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="20sp"
+                tools:text="" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/scrllView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

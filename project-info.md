@@ -1,6 +1,6 @@
 ## Necessidades (requisitos)
 
-- [ ] Activity para alterar a nota;
+- [x] Activity para alterar a nota;
 
 - [x] Utilizar listeners para viewHolder do RecyclerView;
 
@@ -12,11 +12,11 @@
 
 - [ ] Aplicar o uso de ViewModel para persistir mudanças de configuração; (depois)
 
-- [ ] Utilizar toolbar para retornar à lista; (depois)
+- [x] Utilizar toolbar para retornar à lista; (depois)
 
 - [ ] FAB para adicionar novas notas; (depois)
 
-- [ ] Utilizar toolbar para mudar o layout; (depois)
+- [ ] Utilizar toolbar personalizada nas activities; (depois)
 
 - [ ] Deletar nota ao selecionar; (depois)
 
@@ -56,17 +56,19 @@ Activity Adicionar/Editar Nota -> toolbar para retornar à Activity Principal
 
 3. Activity Principal -> botão comum para adicionar as notas;
 
-4. ViewHolder e Adapter para mesclar dados da lista;
+4. Definir layout para os itens da lista; (adicionado: necessário melhorar pois está feio) 
 
-5. Repositório para os dados a serem lidos/gravados (mock);
+5. ViewHolder e Adapter para mesclar dados da lista;
 
-6. Listeners para eventos na ViewHolder;
+6. Repositório para os dados a serem lidos/gravados (mock);
 
-7. Activity Adicionar/Editar Nota -> input para título
+7. Listeners para eventos na ViewHolder; (ir para a Activity de edição da nota) 
 
-8. Activity Adicionar/Editar Nota -> input para conteúdo
+8. Activity Adicionar/Editar Nota -> input para título
 
-9. Activity Adicionar/Editar Nota -> retornar à Activity Principal apenas com o botão back do smartphone
+9. Activity Adicionar/Editar Nota -> input para conteúdo
+
+10. Activity Adicionar/Editar Nota -> retornar à Activity Principal apenas com o botão back do smartphone (alterado: retornando com Up button padrão)
 
 
 

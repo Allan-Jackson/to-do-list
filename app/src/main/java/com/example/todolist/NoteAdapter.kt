@@ -7,17 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ItemlistNoteBinding
 
 //initialize the adapter dataSet in the constructor
-class NoteAdapter(dataSet: List<Repository.Note> = listOf()) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
-    private var mDataSet: List<Repository.Note> = dataSet
+class NoteAdapter(dataSet: List<Note> = listOf()) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+    private var mDataSet: List<Note> = dataSet
     private lateinit var mOnItemListClickListener: OnItemClickListener
 
+    fun getNoteList() = mDataSet
 
     fun setOnItemClickListener(listener: OnItemClickListener){
         mOnItemListClickListener = listener
     }
 
-    inner class NoteViewHolder(val binding:ItemlistNoteBinding): RecyclerView.ViewHolder(binding.root){
-        
+    inner class NoteViewHolder(private val binding:ItemlistNoteBinding): RecyclerView.ViewHolder(binding.root){
+
         init { //constructor acts like onCreate method for itemlist
             itemView.setOnClickListener{
                 mOnItemListClickListener.onClick(it,this.adapterPosition)
@@ -25,8 +26,8 @@ class NoteAdapter(dataSet: List<Repository.Note> = listOf()) : RecyclerView.Adap
         }
 
         //bind the data to the itemlist layout
-        fun bind(note: Repository.Note){
-            binding.txtViewNote.text = note.content
+        fun bind(note: Note){
+            binding.txtViewNote.text = "ID: ${note.getNoteId()}\n${note.title}\n${note.content}"
             Log.d("Adapter","setando texto do textView")
         }
 

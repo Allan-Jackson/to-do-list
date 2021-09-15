@@ -1,5 +1,6 @@
 package com.example.todolist
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,13 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ActivityMainBinding
 
+const val EXTRA_NOTE = "com.example.todolist.NOTE_ID"
+
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     //class constants (do not depends on class instances)
     companion object{
         private const val KEY_LAYOUT_TYPE = "layoutType"
         private const val SPAN_COUNT = 2 //defines the quantity of view per line (in the grid visualization)
     }
-    private var repository = Repository()
+    //todo: pesquisar sobre o padrão Repository e DI
+    private val repository = Repository()
     private var mCurrentLayoutManager = LayoutType.LINEAR_LAYOUT
     private lateinit var binding: ActivityMainBinding
     private lateinit var mRecycler: RecyclerView
@@ -67,15 +71,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.imgViewListView.setOnClickListener(this)
         binding.imgViewGridView.setOnClickListener(this)
         binding.btnAddNote.setOnClickListener(this)
+        mAdapter.setOnItemClickListener{ _,position ->
+            val selectedNote = mAdapter.getNoteList()[position]
+            val intent = Intent(this,NoteActivity::class.java)
+            intent.putExtra(EXTRA_NOTE,selectedNote)
+            startActivity(intent)
+        }
     }
 
     private fun setupRecyclerView() {
         mRecycler = binding.rcylerViewNoteList
-        //TODO: needed to set the adapter
         mAdapter = NoteAdapter(repository.getNoteList())
-        mAdapter.setOnItemClickListener{ _,position ->
-            showShortToast("List item ${position+1} was clicked!")
-        }
         mRecycler.adapter = mAdapter
     }
 
@@ -93,8 +99,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.imgViewGridView.id -> setListLayout(LayoutType.GRID_LAYOUT)
             binding.imgViewListView.id -> setListLayout(LayoutType.LINEAR_LAYOUT)
             binding.btnAddNote.id -> {
-                //TODO: open Edit/Add Note Activity
-                showShortToast("this functionality is coming soon...please be patient;)")
+                //an Intent provides runtime binding between separate components (as two activities)
+                //The Intent represents an app’s intent to do something.
+                startActivity(Intent(this,NoteActivity::class.java))
+                Log.i("MainActivity","Starting NoteActivity by button \"AddNote\"")
             }
         }
     }
