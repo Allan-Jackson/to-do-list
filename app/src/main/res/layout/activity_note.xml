@@ -38,6 +38,7 @@
                 android:textColorHint="#CCC3C3"
                 android:textCursorDrawable="@drawable/cursor"
                 android:textSize="28sp"
+                android:theme="@style/cursor"
                 tools:text="" />
 
             <EditText
@@ -56,6 +57,7 @@
                 android:textColorHint="#CCC3C3"
                 android:textCursorDrawable="@drawable/cursor"
                 android:textSize="20sp"
+                android:theme="@style/cursor"
                 tools:text="" />
 
         </LinearLayout>

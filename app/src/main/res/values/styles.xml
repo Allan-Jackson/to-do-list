@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="cursor">
+        <item name="colorControlActivated">#0BBBE8</item>
+        <item name="android:textColorHighlight">#9FE0F1</item>
+    </style>
+</resources>

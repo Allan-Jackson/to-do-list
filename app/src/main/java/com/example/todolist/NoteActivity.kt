@@ -9,7 +9,7 @@ import android.view.MenuItem
 import com.example.todolist.databinding.ActivityNoteBinding
 
 class NoteActivity : AppCompatActivity() {
-    private val TAG = "NoteActivity"
+    private val TAG = "NoteActivity" //tag for log
     private var note: Note? = null
     private lateinit var binding: ActivityNoteBinding
     private val repository = Repository()
@@ -20,6 +20,9 @@ class NoteActivity : AppCompatActivity() {
         binding = ActivityNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //enables the use of the method 'onSupportNavigateUp' for click on 'Up' button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         /*MovimentMethod: Provides cursor positioning, scrolling and text selection functionality in a TextView.
         ArrowKeyMovementMethod -> A movement method that provides cursor movement and selection.
         ScrollingMovementMethod -> A movement method that interprets movement keys by scrolling the text buffer.
@@ -29,12 +32,9 @@ class NoteActivity : AppCompatActivity() {
         binding.editTxtNoteTitle.maxLines = 15
         binding.editTxtNoteTitle.setHorizontallyScrolling(false)
 
-
         note = intent.getSerializableExtra(EXTRA_NOTE)?.run { this as Note }
         binding.editTxtNoteTitle.text.append(note?.title?:"")
         binding.editTxtNoteContent.text.append(note?.content?:"")
-
-      println(note)
 
         //sendind focus to the note content editText
         binding.frame.setOnClickListener {
@@ -43,25 +43,37 @@ class NoteActivity : AppCompatActivity() {
             //TODO: chamar o teclado
         }
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        Log.i(TAG,"Activity created")
     }
 
+    //triggers when 'up' button is clicked
     override fun onSupportNavigateUp(): Boolean {
+        Log.i(TAG, "'Up button' clicked")
+        returnToMain()
+        return super.onSupportNavigateUp() //calls the default behavior
+    }
+
+    override fun onBackPressed() {
+        returnToMain()
+        super.onBackPressed()
+    }
+
+    fun returnToMain(){
         val title = binding.editTxtNoteTitle.text.toString()
         val content = binding.editTxtNoteContent.text.toString()
 
-        if(note == null){
+        if(note == null){ //adding a new note
+            Log.i(TAG, "calling Repository 'addNote' method")
             repository.addNote(Note(title, content)) //add the new note to the repository list
-        }else{
+        }else{ //updating already existing note
             note.also {
                 if (it != null) {
                     it.content = content
                     it.title = title
                     repository.updateNote(it)
+                    Log.i(TAG, "calling Repository 'updateNote' method")
                 }
             }
         }
-        return super.onSupportNavigateUp()
     }
-
 }
